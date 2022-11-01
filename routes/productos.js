@@ -6,20 +6,20 @@ import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { tieneRol, validarAdminRole } from "../middlewares/validar-roles.js";
 
-const productos = Router()
+const router = Router()
 
 // metodo para obtener todas los productos
-productos.get('/', getProductos)
+router.get('/', getProductos)
 
 // metodo para obtener un producto
-productos.get('/:id',[
+router.get('/:id',[
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom(id => validarProductoPorId(id)),
     validarCampos
 ], getProducto)
 
 // crear un producto - privado (requiere token)
-productos.post('/',[
+router.post('/',[
     validarJWT,
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('precio', 'Por favor asigna un nuevo precio').not().isEmpty(),
@@ -29,7 +29,7 @@ productos.post('/',[
 ], postProducto)
 
 // actualizar un producto - privado (requiere token)
-productos.put('/:id',[
+router.put('/:id',[
     validarJWT,
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('precio', 'Por favor asigna un nuevo precio').not().isEmpty(),
@@ -40,7 +40,7 @@ productos.put('/:id',[
 ], putProducto)
 
 // borrar producto - Usuarios
-productos.delete('/:id',[
+router.delete('/:id',[
     validarJWT,
     tieneRol,
     check('id', 'No es un ID valido').isMongoId(),
@@ -48,4 +48,4 @@ productos.delete('/:id',[
     validarCampos
 ], deleteProducto)
 
-export{productos}
+export{router}

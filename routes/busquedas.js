@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { getBusqueda } from '../controllers/busquedas.js';
 
-const busquedas = Router()
+const router = Router()
 
-busquedas.get('/:coleccion/:termino', getBusqueda )
+router.get('/:coleccion/:termino', getBusqueda )
 
 export{
-    busquedas
+    router
 }

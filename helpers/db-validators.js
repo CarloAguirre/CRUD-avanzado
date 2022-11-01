@@ -43,6 +43,16 @@ const validarProductoPorId = async(id)=>{
         throw new Error(`No hay ningun producto con el id: ${id}`)  
     };
 }
+
+//Verificamos si la coleccion enviada en uploads (put) es valida
+const validarColeccion = (coleccion = '', colecciones = [])=>{
+    const coleccionPermitida = colecciones.includes(coleccion);
+    if(!coleccionPermitida){
+        throw new Error (`La coleccion ${coleccion} no existe. Colecciones permitidas: ${colecciones}`)
+    }
+    //El los validadores anteriores el 'return true' esta implicito en el await.
+    return true;
+}
     
 
 
@@ -51,5 +61,6 @@ export{
     validarCorreo, 
     validarUsuarioPorId, 
     validarCategoriaPorId,
-    validarProductoPorId
+    validarProductoPorId,
+    validarColeccion
 };

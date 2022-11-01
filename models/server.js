@@ -1,11 +1,14 @@
 import express from 'express'
 import cors from 'cors';
-import { router } from '../routes/users.js';
-import { authLogin } from '../routes/login-auth.js';
+import fileUpload from 'express-fileupload';
+
 import { dbConnection } from '../database/config.js';
-import { categorias } from '../routes/categorias.js';
-import { productos } from '../routes/productos.js';
-import { busquedas } from '../routes/busquedas.js';
+import { router } from '../routes/users.js';
+import { router as authLogin } from '../routes/login-auth.js';
+import { router as categorias } from '../routes/categorias.js';
+import { router as productos } from '../routes/productos.js';
+import { router as uploads } from '../routes/uploads.js';
+import { router as busquedas } from '../routes/busquedas.js';
 
 
 class Server{
@@ -19,6 +22,7 @@ class Server{
         this.categoriaPath  = '/api/categorias';
         this.productosPath  = '/api/productos';
         this.buscarPath     = '/api/buscar';
+        this.uploadsPath    = '/api/uploads'
 
         // Constructores //
 
@@ -43,6 +47,14 @@ class Server{
         //lectura y parseo del body
         this.app.use(express.json())
 
+        // configuracion necesaria para express-fileupload
+        this.app.use(fileUpload({
+            // limits: { fileSize: 50 * 1024 * 1024 },
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath: true
+        }));
+
     };
     
     //rutas
@@ -56,6 +68,8 @@ class Server{
         this.app.use(this.productosPath, productos)
         //busquedas generales
         this.app.use(this.buscarPath, busquedas)
+        //cargar archivos
+        this.app.use(this.uploadsPath, uploads )
     };
 
     listen(){
