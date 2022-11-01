@@ -1,6 +1,15 @@
 import { response } from "express";
 import fs from 'fs';
 import path from 'path';
+
+import { v2 as cloudinary } from 'cloudinary';
+cloudinary.config({ 
+  cloud_name: 'dubwhwd1w', 
+  api_key: '932247712861198', 
+  api_secret: '2xSC3WVwl1fwyB-2GNNP0lkGCd8',
+  secure: true
+});
+
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -53,7 +62,7 @@ const actualizarArchivo = async(req, res = response)=>{
     
     break; 
     default:
-      return res.status(500).json({msg: 'aun no he creador esta coleccion'})
+      return res.status(500).json({msg: 'aun no he creador esta validación, informar al backend'})
   }
 
 
@@ -77,7 +86,106 @@ const actualizarArchivo = async(req, res = response)=>{
 
 };
 
+// controlador put que se sirve de hosting de imagenes Cloudinary
+const actualizarArchivoCloudinary = async(req, res = response)=>{
+
+  const {id, coleccion} = req.params;
+
+  let modelo;
+
+  switch (coleccion) {
+    case 'usuarios':
+      modelo = await Usuario.findById(id);
+      if(!modelo){
+        return res.status(400).json({
+          msg: `No existe el usuario con id ${id}`
+        })
+      }  
+
+      break;
+    case 'productos':
+      modelo = await Producto.findById(id);
+      if(!modelo){
+        return res.status(400).json({
+          msg: `No existe el producto con id ${id}`
+        })
+      } 
+    
+    break; 
+    default:
+      return res.status(500).json({msg: 'aun no he creador esta validación, informar al backend'})
+  }
+
+
+  // Limpiar imágenes previas
+  if ( modelo.img ) {
+    // TODO
+  }
+
+  //Extraer el path temporal del archivo para subirlo a cloudinary
+  // console.log(req.files.archivo.tempFilePath)
+  const {tempFilePath} = req.files.archivo;
+
+  // el metodo uploader.upload retorn una promesa
+  const {secure_url} = await cloudinary.uploader.upload(tempFilePath)  
+  modelo.img = secure_url;
+  
+  await modelo.save();
+  
+  res.json(modelo);
+
+};
+
+
+// metodo get para mostrar/servir las imagenes subidas
+const mostrarImagen = async(req, res= response)=>{
+
+  const {id, coleccion} = req.params;
+
+  let modelo;
+
+  switch (coleccion) {
+    case 'usuarios':
+      modelo = await Usuario.findById(id);
+      if(!modelo){
+        return res.status(400).json({
+          msg: `No existe el usuario con id ${id}`
+        })
+      }  
+
+      break;
+    case 'productos':
+      modelo = await Producto.findById(id);
+      if(!modelo){
+        return res.status(400).json({
+          msg: `No existe el producto con id ${id}`
+        })
+      } 
+    
+    break; 
+    default:
+      return res.status(500).json({msg: 'aun no he creador esta validación, informar al backend'})
+  }
+
+
+  // Limpiar imágenes previas
+  if ( modelo.img ) {
+    // Hay que borrar la imagen del servidor reconstruyendo el path donde se aloja
+    const pathImagen = path.join( __dirname, '../uploads', coleccion, modelo.img );
+    if ( fs.existsSync( pathImagen ) ) {
+        return res.sendFile(pathImagen)
+    }
+}
+
+const placeHolder = path.join(__dirname, '../assets/no-image.jpg')
+
+res.sendFile(placeHolder);
+
+}
+
 export{
   cargarArchivo,
-  actualizarArchivo
+  actualizarArchivo,
+  mostrarImagen,
+  actualizarArchivoCloudinary
 }
