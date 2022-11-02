@@ -117,9 +117,12 @@ const actualizarArchivoCloudinary = async(req, res = response)=>{
   }
 
 
-  // Limpiar imágenes previas
+  // Limpiar imágenes previas (en cloudinary)
   if ( modelo.img ) {
-    // TODO
+    const nombreSplit = modelo.img.split('/');
+    const nombre = nombreSplit[nombreSplit.length - 1];
+    const [public_id] = nombre.split('.');
+    cloudinary.uploader.destroy(public_id);
   }
 
   //Extraer el path temporal del archivo para subirlo a cloudinary
