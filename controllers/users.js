@@ -31,12 +31,14 @@ const getUsuario = async(req, res = response) => {    // igualamos 'res' a 'resp
        
     ]);
 
-    res.json({                                  
-        total,
-        usuarios
-    });
+
+
+    res.send();
 };
 
+const mostrarData = (usuarios)=>{
+    console.log(usuarios)
+}
 // El método PUT se usa para crear un recurso con un URI conocido o para reemplazar completamente un recurso conocido
 const putUsuario = async(req, res = response)=> { 
     
