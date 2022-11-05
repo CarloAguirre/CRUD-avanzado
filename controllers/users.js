@@ -33,7 +33,10 @@ const getUsuario = async(req, res = response) => {    // igualamos 'res' a 'resp
 
 
 
-    res.send();
+    res.json({
+        total,
+        usuarios
+    })
 };
 
 const mostrarData = (usuarios)=>{
