@@ -25,11 +25,8 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th></th>
             <th>NOMBRE</th>
-            <th></th>
             <th>CORREO</th>
-            <th></th>
             <th>ROL</th>
           </tr>
           <tbody id="data">  
@@ -37,6 +34,14 @@
         </thead>
       </table>
     </div>
+
+    <div class="m-5">
+      <input type="text" name="buscar" id="txtMensaje">
+      <button class="btn btn-secondary" type="button" id="btnEnviar">Buscar Servicios</button>
+    </div>
+    <div id="results"></div>
+    <!-- <tbody id="results"></tbody> -->
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
@@ -50,18 +55,69 @@
         const mostrarData = (data)=>{
           console.log(data.usuarios)
 
+          const usuarios  = data.usuarios;
+          
           let body ='';
-          for(i=0; i<data.usuarios.length; i++){
+          for(i=0; i<usuarios.length; i++){
             body += `<tr>
-                        <td>${data.usuarios[i].uid}<td>
-                        <td>${data.usuarios[i].nombre}<td>
-                        <td>${data.usuarios[i].correo}<td>
-                        <td>${data.usuarios[i].rol}<td>
+                        <td>${usuarios[i].uid}</td>
+                        <td>${usuarios[i].nombre}</td>
+                        <td>${usuarios[i].correo}</td>
+                        <td>${usuarios[i].rol}</td>
                     </tr>`
           }
 
           document.getElementById('data').innerHTML = body;
         }
+    </script>
+    <script>
+      
+      const txtMensaje = document.querySelector("#txtMensaje");    
+      const btnEnviar = document.querySelector("#btnEnviar");
+      
+      btnEnviar.addEventListener('click', ()=>{
+
+          const msg = txtMensaje.value;
+          let url =`https://restserver-crud-avanzado.herokuapp.com/api/buscar/productos/${msg}`
+        
+          fetch(url)
+          .then(response => response.json())
+          .then(data => mostrarData(data))
+          .catch(error => console.log(error))
+
+          const mostrarData = (data)=>{
+          console.log(data.results)
+
+          let body ='';
+          for(i=0; i<data.results.length; i++){
+            body += `<tr>
+                        <td>${data.results[i].usuario}</td>
+                        <td>${data.results[i].nombre}</td>
+                        <td>${data.results[i].precio}</td>
+                    </tr>`
+          }
+
+          document.getElementById('results').innerHTML = `
+    <div class="container mt-4 shadow-lg p3 mb-5 bg-body rounded">
+      <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>USUARIO</th>
+            <th>DESCRIPCION</th>
+            <th>PRECIO</th>
+          </tr>
+          <tbody>
+            ${body}  
+          </tbody>
+        </thead>
+      </table>
+    </div>`;
+          }
+
+
+        })
+
+
     </script>
   </body>
 </html>
