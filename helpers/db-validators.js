@@ -15,7 +15,7 @@ const validarRol = async (rol = '')=>{
 const validarCorreo = async(correo)=>{
     const mailExiste  = await Usuario.findOne({correo: correo});
     if(mailExiste){
-        throw new Error(`Ese mail ${correo} ya esta registrado, intenta con otro`)  
+        throw new Error(`El mail ${correo} ya esta registrado, intenta con otro`)  
     };
 }
 

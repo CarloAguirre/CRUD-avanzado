@@ -25,7 +25,7 @@ const cargarArchivo = async(req, res = response)=>{
     try {
       
       //enviamos el segundo argumento como undefined ya que es necesario enviar el segundo argumento para enviar tambien el tercero
-      const nombre = await subirArchivo(req.files, undefined, 'imgs');
+      const nombre = await subirArchivo(req.files, undefined, '../imgs');
       
       res.json({
         nombre: nombre
