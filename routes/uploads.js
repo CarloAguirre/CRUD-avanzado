@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
+import cors from 'cors';
 
 import { actualizarArchivo, actualizarArchivoCloudinary, cargarArchivo, mostrarImagen } from "../controllers/uploads.js";
 import { validarColeccion } from "../helpers/db-validators.js";
@@ -11,7 +12,7 @@ const router = Router();
 
 router.post('/',validarArchivoSubido, cargarArchivo)
 
-router.put('/:coleccion/:id', [
+router.put('/:coleccion/:id', cors(), [
     validarArchivoSubido,
     check('id', 'El id enviado es invalido').isMongoId(),
     check('coleccion').custom( c => validarColeccion(c, ['usuarios', 'productos'])),
