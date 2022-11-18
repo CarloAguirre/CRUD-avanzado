@@ -42,14 +42,8 @@ class Server{
     };
     
     middlewares(){
-        
-        const corsOptions ={
-            origin:'*', 
-            credentials:true,            //access-control-allow-credentials:true
-            optionSuccessStatus:200,
-         }
          
-        this.app.use(cors(corsOptions));       // <--- ayuda a controlar el intercambio de recursos HTTP (evita errores cross domain acces)
+        this.app.use(cors());       // <--- ayuda a controlar el intercambio de recursos HTTP (evita errores cross domain acces)
         this.app.use(express.static('public'))
 
         //lectura y parseo del body
