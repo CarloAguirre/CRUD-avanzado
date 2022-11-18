@@ -12,7 +12,7 @@ const router = Router();
 
 router.post('/',validarArchivoSubido, cargarArchivo)
 
-app.options('/coleccion/:id', cors())
+router.options('/coleccion/:id', cors())
 router.put('/:coleccion/:id', [
     validarArchivoSubido,
     check('id', 'El id enviado es invalido').isMongoId(),
