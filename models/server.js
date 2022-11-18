@@ -11,6 +11,7 @@ import { router as uploads } from '../routes/uploads.js';
 import { router as busquedas } from '../routes/busquedas.js';
 
 
+
 class Server{
     
     constructor(){
@@ -41,7 +42,14 @@ class Server{
     };
     
     middlewares(){
-        this.app.use(cors());       // <--- ayuda a controlar el intercambio de recursos HTTP (evita errores cross domain acces)
+        
+        const corsOptions ={
+            origin:'*', 
+            credentials:true,            //access-control-allow-credentials:true
+            optionSuccessStatus:200,
+         }
+         
+        this.app.use(cors(corsOptions));       // <--- ayuda a controlar el intercambio de recursos HTTP (evita errores cross domain acces)
         this.app.use(express.static('public'))
 
         //lectura y parseo del body
