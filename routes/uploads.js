@@ -17,7 +17,7 @@ router.put('/:coleccion/:id', [
     check('id', 'El id enviado es invalido').isMongoId(),
     check('coleccion').custom( c => validarColeccion(c, ['usuarios', 'productos'])),
     validarCampos
-], actualizarArchivo )
+], actualizarArchivoCloudinary )
 
 router.get('/:coleccion/:id', [
     check('id', 'El id enviado es invalido').isMongoId(),
