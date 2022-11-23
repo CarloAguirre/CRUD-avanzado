@@ -38,13 +38,14 @@ const getProducto = async(req, res = response)=>{
 // crear un producto - privado (requiere token)
 const postProducto = async(req, res = response)=>{
 
-    const {nombre, precio, categoria} = req.body
+    const {nombre, precio, categoria, descripcion} = req.body
 
     //generar la data que se guardara
     const data = {
         nombre,
         precio,
         categoria,
+        descripcion,
         usuario: req.usuario._id,
     }
 
