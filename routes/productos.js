@@ -26,6 +26,7 @@ router.post('/',[
     check('precio', 'El precio debe ser numerico').isNumeric(),
     check('categoria', 'Por favor selecciona una categoria').not().isEmpty(),
     check('descripcion', 'La descripcion es obligatoria').not().isEmpty(),
+    check('ciudad', 'Debes seleccionar una ciudad valida').not().isEmpty(),
     validarCampos
 ], postProducto)
 

@@ -31,6 +31,10 @@ const ProductoSchema = Schema({
         type: String,
         required: true
     },
+    ciudad: {
+        type: String,
+        required: true
+    },
     disponible: {type: Boolean, default: true},
     img: {type: String}
 });
