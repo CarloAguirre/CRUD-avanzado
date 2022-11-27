@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import cors from 'cors';
 
-import { actualizarArchivo, actualizarArchivoCloudinary, cargarArchivo, mostrarImagen, segundaImagen } from "../controllers/uploads.js";
+
+import { actualizarArchivoCloudinary, cargarArchivo, mostrarImagen} from "../controllers/uploads.js";
 import { validarColeccion } from "../helpers/db-validators.js";
 import { validarArchivoSubido } from "../middlewares/validar-archivo.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
