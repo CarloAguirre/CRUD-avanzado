@@ -119,10 +119,20 @@ const actualizarArchivoCloudinary = async(req, res = response)=>{
 
   // Limpiar imágenes previas (en cloudinary)
   if ( modelo.img ) {
-    const nombreSplit = modelo.img.split('/');
-    const nombre = nombreSplit[nombreSplit.length - 1];
-    const [public_id] = nombre.split('.');
-    cloudinary.uploader.destroy(public_id);
+    // const nombreSplit = modelo.img.split('/');
+    // const nombre = nombreSplit[nombreSplit.length - 1];
+    // const [public_id] = nombre.split('.');
+    // cloudinary.uploader.destroy(public_id);
+    
+
+    const {tempFilePath} = req.files.archivo;
+
+    const {secure_url} = await cloudinary.uploader.upload(tempFilePath)  
+    modelo.img2 = secure_url;
+    
+    await modelo.save();
+    
+    return res.json(modelo);
   }
 
   //Extraer el path temporal del archivo para subirlo a cloudinary
@@ -190,5 +200,6 @@ export{
   cargarArchivo,
   actualizarArchivo,
   mostrarImagen,
-  actualizarArchivoCloudinary
+  actualizarArchivoCloudinary,
+  segundaImagen
 }
