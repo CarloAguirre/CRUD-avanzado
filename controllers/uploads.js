@@ -200,6 +200,5 @@ export{
   cargarArchivo,
   actualizarArchivo,
   mostrarImagen,
-  actualizarArchivoCloudinary,
-  segundaImagen
+  actualizarArchivoCloudinary
 }
