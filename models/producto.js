@@ -39,6 +39,7 @@ const ProductoSchema = Schema({
     img: {type: String},
     img2: {type: String},
     itinerario:{type: String},
+    requisitos:{type: String},
     altura:{type: String},
     dificultad:{type: String},
     distancia:{type: String},
