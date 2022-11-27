@@ -36,7 +36,9 @@ const ProductoSchema = Schema({
         required: true
     },
     disponible: {type: Boolean, default: true},
-    img: {type: String}
+    img: {type: String},
+    img2: {type: String}
+
 });
 
 ProductoSchema.methods.toJSON = function(){ // <--- debemos utilizar una funcion normal para que 'this' apunte dentro del scope
