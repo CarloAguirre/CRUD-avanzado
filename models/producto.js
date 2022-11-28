@@ -79,6 +79,7 @@ const ProductoSchema = Schema({
     necesario12:{type: String},
     necesario13:{type: String},
     necesario14:{type: String},
+    necesario15:{type: String},
     necesario16:{type: String},
     necesario17:{type: String},
     necesario18:{type: String},
