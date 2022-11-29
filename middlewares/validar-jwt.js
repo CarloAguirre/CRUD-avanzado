@@ -10,7 +10,7 @@ const validarJWT = async(req = request, res = response, next)=>{
     const token = req.header('Authorization');
     if(!token){
         return res.status(401).json({      // <--- 401 = unauthorized/sin autorización
-            msg: 'No se ha especificado ningun token de validación'
+            msg: 'No se ha especificado ningun token de validación, debes iniciar sesíon primero.'
         })
     }
     
@@ -43,7 +43,7 @@ const validarJWT = async(req = request, res = response, next)=>{
     } catch (error) {
         console.log(error)
         res.status(401).json({
-            msg: 'token no valido'
+            msg: 'Vuelve a iniciar sesión.'
         })
     };
 };
