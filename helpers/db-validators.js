@@ -44,6 +44,16 @@ const validarProductoPorId = async(id)=>{
     };
 }
 
+//verificamos el id de la categoria enviada
+const validarProductosPorCategoria = async(id)=>{
+    const existeCategoria  = await Categoria.findById(id);
+    if(!existeCategoria){
+        throw new Error(`No hay ninguna categoria con el id: ${id}`)  
+    };
+}
+
+
+
 //Verificamos si la coleccion enviada en uploads (put) es valida
 const validarColeccion = (coleccion = '', colecciones = [])=>{
     const coleccionPermitida = colecciones.includes(coleccion);
@@ -62,5 +72,6 @@ export{
     validarUsuarioPorId, 
     validarCategoriaPorId,
     validarProductoPorId,
-    validarColeccion
+    validarColeccion,
+    validarProductosPorCategoria
 };

@@ -35,6 +35,18 @@ const getProducto = async(req, res = response)=>{
     })
 };
 
+// Metodo para obtener productos por categoria
+const getProductoPorCategoria = async(req, res = response)=>{
+
+    const {categoria} = req.params
+    
+    const productos = await Producto.findOne({categoria})                                   
+
+    res.json({
+        productos
+    })
+};
+
 // crear un producto - privado (requiere token)
 const postProducto = async(req, res = response)=>{
 
@@ -97,6 +109,7 @@ const deleteProducto = async(req, res = response)=>{
 export{
     getProductos, 
     getProducto,
+    getProductoPorCategoria,
     postProducto, 
     putProducto, 
     deleteProducto

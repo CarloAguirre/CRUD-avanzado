@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { deleteProducto, getProducto, getProductos, postProducto, putProducto } from "../controllers/productos.js";
-import { validarProductoPorId } from "../helpers/db-validators.js";
+import { deleteProducto, getProducto, getProductoPorCategoria, getProductos, postProducto, putProducto } from "../controllers/productos.js";
+import { validarProductoPorId, validarProductosPorCategoria } from "../helpers/db-validators.js";
 import { validarCampos } from "../middlewares/validar-campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { tieneRol, validarAdminRole } from "../middlewares/validar-roles.js";
@@ -17,6 +17,13 @@ router.get('/:id',[
     check('id').custom(id => validarProductoPorId(id)),
     validarCampos
 ], getProducto)
+
+// metodo para obtener productos por categoria
+router.get('/:categoria',[
+    check('categoria', 'No es un ID valido').isMongoId(),
+    check('categoria').custom(id => validarProductosPorCategoria(id)),
+    validarCampos
+], getProductoPorCategoria)
 
 // crear un producto - privado (requiere token)
 router.post('/',[
