@@ -19,7 +19,7 @@ router.get('/:id',[
 ], getProducto)
 
 // metodo para obtener productos por categoria
-router.get('/:categoria',[
+router.get('/categoria/:categoria',[
     check('categoria', 'No es un ID valido').isMongoId(),
     check('categoria').custom(id => validarProductosPorCategoria(id)),
     validarCampos
