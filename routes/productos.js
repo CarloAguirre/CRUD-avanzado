@@ -51,7 +51,7 @@ router.put('/:id',[
 // borrar producto - Usuarios
 router.delete('/:id',[
     validarJWT,
-    tieneRol,
+    // tieneRol,
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom(id => validarProductoPorId(id)),
     validarCampos
