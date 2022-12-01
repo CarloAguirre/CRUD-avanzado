@@ -35,9 +35,11 @@ const ProductoSchema = Schema({
         type: String,
         required: true
     },
-    disponible: {type: Boolean, default: true},
+    disponible: {
+        type: Boolean, 
+        default: true},
     img: {type: String},
-    imgDos: {type: String},
+    img2: {type: String},
     itinerario:{type: String},
     requisitos:{type: String},
     altura:{type: String},
