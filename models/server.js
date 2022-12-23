@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
+import compression from 'compression';
 
 import { dbConnection } from '../database/config.js';
 import { router } from '../routes/users.js';
@@ -42,7 +43,7 @@ class Server{
     };
     
     middlewares(){
-         
+        this.app.use(compression())
         this.app.use(cors());       // <--- ayuda a controlar el intercambio de recursos HTTP (evita errores cross domain acces)
         this.app.use(express.static('public'))
 

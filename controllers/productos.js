@@ -40,7 +40,8 @@ const getProductoPorCategoria = async(req, res = response)=>{
 
     const {categoria} = req.params
     
-    const productos = await Producto.find({categoria})                                   
+    const productos = await Producto.find({categoria})    
+                                                                   
 
     res.json({
         productos
